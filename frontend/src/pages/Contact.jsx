@@ -121,6 +121,27 @@ const Contact = () => {
                 </CardContent>
               </Card>
 
+              <Card className="border-green-100 bg-green-50">
+                <CardContent className="p-6">
+                  <div className="flex items-start gap-4">
+                    <div className="flex-shrink-0 w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
+                      <MessageCircle className="h-6 w-6 text-green-600" />
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="font-semibold text-gray-900 mb-1">WhatsApp</h3>
+                      <p className="text-gray-600 mb-3">{clinicInfo.whatsapp}</p>
+                      <Button 
+                        onClick={handleWhatsApp}
+                        className="bg-green-600 hover:bg-green-700 text-white w-full"
+                      >
+                        <MessageCircle className="h-4 w-4 mr-2" />
+                        Message on WhatsApp
+                      </Button>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
               <Card className="border-blue-100">
                 <CardContent className="p-6">
                   <div className="flex items-start gap-4">
