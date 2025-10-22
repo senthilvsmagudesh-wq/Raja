@@ -27,26 +27,31 @@ const Staff = () => {
           <div className="max-w-5xl mx-auto">
             <div className="grid md:grid-cols-3 gap-8">
               {staff.map((member) => (
-                <Card key={member.id} className="border-blue-100 hover:shadow-lg transition-all duration-300">
-                  <CardContent className="p-6 text-center">
-                    <div className="inline-flex items-center justify-center w-24 h-24 bg-gradient-to-br from-blue-100 to-cyan-100 rounded-full mb-4">
-                      <span className="text-3xl font-bold text-blue-600">
-                        {member.name.split(' ').map(n => n[0]).join('')}
-                      </span>
+                <Card key={member.id} className="border-blue-100 hover:shadow-lg transition-all duration-300 overflow-hidden">
+                  <CardContent className="p-0">
+                    <div className="relative h-64 overflow-hidden">
+                      <img
+                        src={member.image}
+                        alt={member.name}
+                        className="w-full h-full object-cover"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
                     </div>
-                    <h3 className="text-xl font-semibold text-gray-900 mb-2">{member.name}</h3>
-                    <Badge className="bg-blue-100 text-blue-700 mb-3">{member.role}</Badge>
-                    <div className="flex items-center justify-center gap-2 text-sm text-gray-600 mb-3">
-                      <Briefcase className="h-4 w-4 text-blue-600" />
-                      <span>{member.experience} experience</span>
-                    </div>
-                    {member.specialization && (
+                    <div className="p-6 text-center">
+                      <h3 className="text-xl font-semibold text-gray-900 mb-2">{member.name}</h3>
+                      <Badge className="bg-blue-100 text-blue-700 mb-3">{member.role}</Badge>
                       <div className="flex items-center justify-center gap-2 text-sm text-gray-600 mb-3">
-                        <Award className="h-4 w-4 text-cyan-600" />
-                        <span>{member.specialization}</span>
+                        <Briefcase className="h-4 w-4 text-blue-600" />
+                        <span>{member.experience} experience</span>
                       </div>
-                    )}
-                    <p className="text-gray-600 text-sm leading-relaxed">{member.description}</p>
+                      {member.specialization && (
+                        <div className="flex items-center justify-center gap-2 text-sm text-gray-600 mb-3">
+                          <Award className="h-4 w-4 text-cyan-600" />
+                          <span>{member.specialization}</span>
+                        </div>
+                      )}
+                      <p className="text-gray-600 text-sm leading-relaxed">{member.description}</p>
+                    </div>
                   </CardContent>
                 </Card>
               ))}
