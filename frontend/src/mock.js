@@ -2,7 +2,8 @@ export const clinicInfo = {
   name: "RAJA Health Care Clinic",
   tagline: "Compassionate Neurology Care in Salem",
   phone: "076959 91173",
-  email: "info@rajahealthcare.com",
+  whatsapp: "8870998189",
+  email: "senthilvsmagudesh@gmail.com",
   address: "Arisipalayam, Salem, Tamil Nadu",
   fullAddress: "123 Neurology Street, Arisipalayam, Salem, Tamil Nadu 636001",
   workingHours: {
