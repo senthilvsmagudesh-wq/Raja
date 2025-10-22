@@ -132,19 +132,23 @@ export const services = [
     items: [
       {
         name: "EEG (Electroencephalography)",
-        description: "Brain wave monitoring for epilepsy diagnosis, sleep disorders, and brain function assessment."
+        description: "Brain wave monitoring for epilepsy diagnosis, sleep disorders, and brain function assessment.",
+        image: "https://images.unsplash.com/photo-1715866170788-cbde4a47a742"
       },
       {
         name: "EMG/NCS (Electromyography/Nerve Conduction Studies)",
-        description: "Detailed nerve and muscle testing for neuropathy, muscle disorders, and nerve injuries."
+        description: "Detailed nerve and muscle testing for neuropathy, muscle disorders, and nerve injuries.",
+        image: "https://images.unsplash.com/photo-1664902265139-934219cee42f"
       },
       {
         name: "VEP (Visual Evoked Potentials)",
-        description: "Visual pathway testing for optic nerve disorders and multiple sclerosis diagnosis."
+        description: "Visual pathway testing for optic nerve disorders and multiple sclerosis diagnosis.",
+        image: "https://images.unsplash.com/photo-1576669801838-1b1c52121e6a"
       },
       {
         name: "BERA (Brainstem Evoked Response Audiometry)",
-        description: "Hearing pathway assessment and brainstem function evaluation."
+        description: "Hearing pathway assessment and brainstem function evaluation.",
+        image: "https://images.unsplash.com/photo-1664902265139-934219cee42f"
       }
     ]
   },
