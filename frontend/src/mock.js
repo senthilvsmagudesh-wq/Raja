@@ -39,25 +39,48 @@ export const doctorInfo = {
 export const staff = [
   {
     id: 1,
-    name: "Ms. Priya Sharma",
-    role: "Clinic Manager",
+    name: "Dr. Priya Sharma",
+    role: "Senior Neurologist",
     experience: "10 years",
-    description: "Ensures smooth clinic operations and exceptional patient care coordination."
+    image: "https://images.unsplash.com/photo-1584432810601-6c7f27d2362b",
+    specialization: "Epilepsy & Seizure Disorders",
+    description: "Expert in epilepsy management and long-term seizure control with comprehensive patient care."
   },
   {
     id: 2,
     name: "Mr. Rahul Singh",
-    role: "Neurological Technician",
+    role: "Chief Neurological Technician",
     experience: "8 years",
-    specialization: "EEG, EMG/NCS",
-    description: "Specialized in conducting neurological diagnostic tests with precision and care."
+    image: "https://images.unsplash.com/photo-1641723345378-a701b30b2d36",
+    specialization: "EEG, EMG/NCS Diagnostics",
+    description: "Specialized in conducting neurological diagnostic tests with precision and patient comfort."
   },
   {
     id: 3,
-    name: "Ms. Anjali Devi",
-    role: "Patient Coordinator",
-    experience: "5 years",
-    description: "Your first point of contact for appointments and patient assistance."
+    name: "Dr. Anjali Reddy",
+    role: "Consultant Neurologist",
+    experience: "7 years",
+    image: "https://images.pexels.com/photos/34390490/pexels-photo-34390490.jpeg",
+    specialization: "Stroke & Vascular Neurology",
+    description: "Focused on acute stroke care, prevention strategies, and vascular neurological disorders."
+  },
+  {
+    id: 4,
+    name: "Ms. Lakshmi Devi",
+    role: "Senior Nurse & Care Coordinator",
+    experience: "12 years",
+    image: "https://images.pexels.com/photos/2324837/pexels-photo-2324837.jpeg",
+    specialization: "Patient Care & Rehabilitation",
+    description: "Dedicated to providing compassionate nursing care and coordinating patient rehabilitation programs."
+  },
+  {
+    id: 5,
+    name: "Mr. Karthik Kumar",
+    role: "Neurophysiology Specialist",
+    experience: "6 years",
+    image: "https://images.unsplash.com/photo-1516841273335-e39b37888115",
+    specialization: "VEP, BERA Testing",
+    description: "Expert in conducting advanced neurophysiological tests including visual and auditory evoked potentials."
   }
 ];
 
