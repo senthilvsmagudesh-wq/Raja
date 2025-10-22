@@ -91,31 +91,38 @@ export const services = [
     items: [
       {
         name: "Stroke Management",
-        description: "Comprehensive acute stroke care, rehabilitation planning, and prevention strategies for optimal recovery."
+        description: "Comprehensive acute stroke care, rehabilitation planning, and prevention strategies for optimal recovery.",
+        image: "https://images.pexels.com/photos/4226119/pexels-photo-4226119.jpeg"
       },
       {
         name: "Epilepsy",
-        description: "Diagnosis, medication management, and long-term monitoring for seizure disorders in all age groups."
+        description: "Diagnosis, medication management, and long-term monitoring for seizure disorders in all age groups.",
+        image: "https://images.unsplash.com/photo-1715866170788-cbde4a47a742"
       },
       {
         name: "Parkinson's Disease",
-        description: "Expert management of movement disorders with medication optimization and lifestyle counseling."
+        description: "Expert management of movement disorders with medication optimization and lifestyle counseling.",
+        image: "https://images.pexels.com/photos/24346267/pexels-photo-24346267.jpeg"
       },
       {
         name: "Migraine & Headaches",
-        description: "Specialized treatment for chronic migraines, tension headaches, and other headache disorders."
+        description: "Specialized treatment for chronic migraines, tension headaches, and other headache disorders.",
+        image: "https://images.unsplash.com/photo-1576669801838-1b1c52121e6a"
       },
       {
         name: "Multiple Sclerosis",
-        description: "Comprehensive care for MS patients including disease-modifying therapies and symptom management."
+        description: "Comprehensive care for MS patients including disease-modifying therapies and symptom management.",
+        image: "https://images.unsplash.com/photo-1664902265139-934219cee42f"
       },
       {
         name: "Dementia & Memory Disorders",
-        description: "Early diagnosis and management of Alzheimer's disease and other cognitive disorders."
+        description: "Early diagnosis and management of Alzheimer's disease and other cognitive disorders.",
+        image: "https://images.pexels.com/photos/4226119/pexels-photo-4226119.jpeg"
       },
       {
         name: "Neuropathy",
-        description: "Treatment for peripheral nerve disorders, diabetic neuropathy, and nerve pain management."
+        description: "Treatment for peripheral nerve disorders, diabetic neuropathy, and nerve pain management.",
+        image: "https://images.unsplash.com/photo-1576669801838-1b1c52121e6a"
       }
     ]
   },
