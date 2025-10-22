@@ -59,14 +59,27 @@ const Services = () => {
                     {serviceCategory.items.map((service, index) => (
                       <Card
                         key={index}
-                        className={`${colors.border} hover:shadow-lg transition-all duration-300 group`}
+                        className={`${colors.border} hover:shadow-lg transition-all duration-300 group overflow-hidden`}
                       >
-                        <CardHeader>
-                          <CardTitle className={`text-xl ${colors.title} group-hover:${colors.icon} transition-colors`}>
-                            {service.name}
-                          </CardTitle>
-                        </CardHeader>
-                        <CardContent>
+                        {service.image && (
+                          <div className="relative h-48 overflow-hidden">
+                            <img
+                              src={service.image}
+                              alt={service.name}
+                              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                            />
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                            <div className="absolute bottom-4 left-4">
+                              <h3 className="text-white font-semibold text-lg">{service.name}</h3>
+                            </div>
+                          </div>
+                        )}
+                        <CardContent className="p-6">
+                          {!service.image && (
+                            <CardTitle className={`text-xl ${colors.title} group-hover:${colors.icon} transition-colors mb-3`}>
+                              {service.name}
+                            </CardTitle>
+                          )}
                           <p className="text-gray-600 leading-relaxed">
                             {service.description}
                           </p>
