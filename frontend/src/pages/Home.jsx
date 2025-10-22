@@ -28,13 +28,24 @@ const Home = () => {
                 Welcome to RAJA Health Care Clinic – a specialist neurology centre in {clinicInfo.address}. Expert care for all neurological conditions with state-of-the-art diagnostics.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
-                <Button size="lg" className="bg-blue-600 hover:bg-blue-700 text-white">
+                <Button 
+                  size="lg" 
+                  className="bg-blue-600 hover:bg-blue-700 text-white"
+                  onClick={() => window.location.href = `tel:${clinicInfo.phone}`}
+                >
                   <Phone className="mr-2 h-5 w-5" />
                   Call {clinicInfo.phone}
                 </Button>
-                <Button size="lg" variant="outline" className="border-blue-600 text-blue-600 hover:bg-blue-50">
+                <Button 
+                  size="lg" 
+                  className="bg-green-600 hover:bg-green-700 text-white"
+                  onClick={() => {
+                    const message = encodeURIComponent("Hello, I would like to book an appointment at RAJA Health Care Clinic.");
+                    window.open(`https://wa.me/91${clinicInfo.whatsapp}?text=${message}`, '_blank');
+                  }}
+                >
                   <Calendar className="mr-2 h-5 w-5" />
-                  Book Appointment
+                  Book via WhatsApp
                 </Button>
               </div>
               <div className="flex items-center gap-6 text-sm text-gray-600">
