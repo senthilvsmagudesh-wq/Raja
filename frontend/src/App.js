@@ -10,7 +10,7 @@ import Doctor from "./pages/Doctor";
 import Services from "./pages/Services";
 import Staff from "./pages/Staff";
 import PatientInfo from "./pages/PatientInfo";
-import Contact from "./pages/Contact";
+import BookAppointment from "./pages/BookAppointment";
 import Updates from "./pages/Updates";
 
 function App() {
@@ -25,7 +25,7 @@ function App() {
           <Route path="/services" element={<Services />} />
           <Route path="/staff" element={<Staff />} />
           <Route path="/patient-info" element={<PatientInfo />} />
-          <Route path="/contact" element={<Contact />} />
+          <Route path="/book-appointment" element={<BookAppointment />} />
           <Route path="/updates" element={<Updates />} />
         </Routes>
         <Footer />

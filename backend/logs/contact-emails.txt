@@ -1,0 +1,40 @@
+[2025-10-23T13:46:44.130222+00:00]
+Name: Automated Test
+Email: autotest@example.com
+Phone: 0000000000
+Subject: Automated test
+Message:
+This is a test message from the assistant.
+---
+[2025-10-23T13:57:53.570988+00:00]
+Name: magudeshwaran.H
+Email: magudeshhmw@gmail.com
+Phone: 08870998189
+Subject: serfsef
+Message:
+helooooooooooooooooooooooooooooooo
+---
+[2025-10-23T14:04:38.834868+00:00]
+Name: magudeshwaran.H
+Email: magudeshhmw@gmail.com
+Phone: 08870998189
+Subject: serfsef
+Message:
+erferfref
+---
+[2025-10-23T14:08:41.134025+00:00]
+Name: magudeshwaran.H
+Email: magudeshhmw@gmail.com
+Phone: 08870998189
+Subject: serfsef
+Message:
+hyui
+---
+[2025-10-23T14:15:19.254673+00:00]
+Name: magudeshwaran.H
+Email: magudeshhmw@gmail.com
+Phone: 08870998189
+Subject: serfsef
+Message:
+erferf
+---

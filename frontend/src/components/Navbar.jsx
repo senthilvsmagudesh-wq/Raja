@@ -16,7 +16,7 @@ const Navbar = () => {
     { name: 'Our Team', path: '/staff' },
     { name: 'Patient Info', path: '/patient-info' },
     { name: 'Updates', path: '/updates' },
-    { name: 'Contact', path: '/contact' }
+    { name: 'Book Appointment', path: '/book-appointment' }
   ];
 
   const isActive = (path) => location.pathname === path;
