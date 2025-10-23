@@ -6,12 +6,10 @@ import os
 import logging
 from pathlib import Path
 from pydantic import BaseModel, Field, ConfigDict, EmailStr
-from typing import List
+from typing import List, Optional
 import uuid
 from datetime import datetime, timezone
-import smtplib
-from email.mime.text import MIMEText
-from email.mime.multipart import MIMEMultipart
+import requests
 
 
 ROOT_DIR = Path(__file__).parent
@@ -40,12 +38,14 @@ class StatusCheck(BaseModel):
 class StatusCheckCreate(BaseModel):
     client_name: str
 
-class ContactForm(BaseModel):
+class AppointmentForm(BaseModel):
     name: str
-    email: EmailStr
+    email: Optional[str] = None
     phone: str
-    subject: str
-    message: str
+    preferredDate: str
+    preferredTime: str
+    department: str
+    reason: Optional[str] = None
 
 # Add your routes to the router instead of directly to app
 @api_router.get("/")
@@ -65,62 +65,58 @@ async def create_status_check(input: StatusCheckCreate):
     return status_obj
 
 
-# Contact endpoint: store message and send email notification
-@api_router.post("/contact")
-async def submit_contact(form: ContactForm):
-    # Persist to MongoDB (without _id exposure)
+# Appointment booking endpoint
+@api_router.post("/book-appointment")
+async def book_appointment(form: AppointmentForm):
     try:
+        # Save appointment to MongoDB
         doc = form.model_dump()
         doc["timestamp"] = datetime.now(timezone.utc).isoformat()
-        await db.contact_messages.insert_one(doc)
+        doc["status"] = "pending"  # pending, confirmed, cancelled
+        await db.appointments.insert_one(doc)
+        
+        # Send email using Resend API
+        resend_api_key = "re_ethH6kzz_DqKLnTE4GvLC2vYxF2DTm2K6"
+        resend_url = "https://api.resend.com/v1/email/send"
+        
+        # Format the email content with HTML for better presentation
+        email_content = f"""
+        <h2>New Appointment Request</h2>
+        <p><strong>Patient Name:</strong> {form.name}</p>
+        <p><strong>Phone:</strong> {form.phone}</p>
+        <p><strong>Email:</strong> {form.email if form.email else 'Not provided'}</p>
+        <p><strong>Department:</strong> {form.department}</p>
+        <p><strong>Preferred Date:</strong> {form.preferredDate}</p>
+        <p><strong>Preferred Time:</strong> {form.preferredTime}</p>
+        <p><strong>Reason for Visit:</strong> {form.reason if form.reason else 'Not specified'}</p>
+        """
+
+        email_data = {
+            "from": "RAJA Health Care <onboarding@resend.dev>",
+            "to": ["senthilvsmagudesh@gmail.com"],  # Replace with your Gmail
+            "subject": f"New Appointment Request - {form.name}",
+            "html": email_content
+        }
+
+        headers = {
+            "Authorization": f"Bearer {resend_api_key}",
+            "Content-Type": "application/json"
+        }
+
+        response = requests.post(resend_url, json=email_data, headers=headers)
+        
+        if response.status_code != 200:
+            logger.error(f"Failed to send email: {response.text}")
+            # Don't raise exception, still return success if appointment was saved
+        
+        return {
+            "status": "success",
+            "message": "Appointment request received successfully"
+        }
+        
     except Exception as e:
-        logger.exception("Failed to save contact message")
-        raise HTTPException(status_code=500, detail="Failed to save message")
-
-    # Send email notification if SMTP configured
-    smtp_host = os.environ.get("SMTP_HOST")
-    smtp_port = int(os.environ.get("SMTP_PORT", "0"))
-    smtp_user = os.environ.get("SMTP_USER")
-    smtp_pass = os.environ.get("SMTP_PASS")
-    recipient = os.environ.get("CONTACT_RECIPIENT")
-
-    if smtp_host and smtp_port and smtp_user and smtp_pass and recipient:
-        try:
-            msg = MIMEMultipart()
-            msg["From"] = smtp_user
-            msg["To"] = recipient
-            msg["Subject"] = f"Website contact: {form.subject}"
-
-            body = f"Name: {form.name}\nEmail: {form.email}\nPhone: {form.phone}\n\nMessage:\n{form.message}"
-            msg.attach(MIMEText(body, "plain"))
-
-            # Use SMTP with TLS when possible
-            server = smtplib.SMTP(smtp_host, smtp_port, timeout=10)
-            server.starttls()
-            server.login(smtp_user, smtp_pass)
-            server.sendmail(smtp_user, [recipient], msg.as_string())
-            server.quit()
-            logger.info("Contact email sent to %s", recipient)
-        except Exception:
-            logger.exception("Failed to send contact email")
-            # Don't fail the whole request if email can't be sent
-
-    else:
-        # Development fallback: write the email body to a local log file so developers
-        # can inspect the email contents without configuring SMTP.
-        try:
-            logs_dir = ROOT_DIR / "logs"
-            logs_dir.mkdir(parents=True, exist_ok=True)
-            log_file = logs_dir / "contact-emails.txt"
-            body = f"Name: {form.name}\nEmail: {form.email}\nPhone: {form.phone}\nSubject: {form.subject}\nMessage:\n{form.message}\n---\n"
-            with log_file.open("a", encoding="utf8") as fh:
-                fh.write(f"[{datetime.now(timezone.utc).isoformat()}]\n")
-                fh.write(body)
-            logger.info("SMTP not configured; wrote contact message to %s", str(log_file))
-        except Exception:
-            logger.exception("Failed to write contact message to local log file")
-
-    return {"status": "ok"}
+        logger.exception("Failed to process appointment request")
+        raise HTTPException(status_code=500, detail="Failed to process appointment request")
 
 @api_router.get("/status", response_model=List[StatusCheck])
 async def get_status_checks():
