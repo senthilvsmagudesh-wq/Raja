@@ -68,6 +68,8 @@ async def create_status_check(input: StatusCheckCreate):
 # Appointment booking endpoint
 @api_router.post("/book-appointment")
 async def book_appointment(form: AppointmentForm):
+    email_status = {"sent": False, "error": None}
+    
     try:
         # Save appointment to MongoDB
         doc = form.model_dump()
@@ -76,8 +78,10 @@ async def book_appointment(form: AppointmentForm):
         await db.appointments.insert_one(doc)
         
         # Send email using Resend API
-        resend_api_key = "re_ethH6kzz_DqKLnTE4GvLC2vYxF2DTm2K6"
-        resend_url = "https://api.resend.com/v1/email/send"
+        resend_api_key = os.environ.get("RESEND_API_KEY")
+        admin_email = os.environ.get("CONTACT_RECIPIENT") or os.environ.get("ADMIN_EMAIL")
+        # Use the current Resend endpoint
+        resend_url = "https://api.resend.com/emails"
         
         # Format the email content with HTML for better presentation
         email_content = f"""
@@ -91,30 +95,61 @@ async def book_appointment(form: AppointmentForm):
         <p><strong>Reason for Visit:</strong> {form.reason if form.reason else 'Not specified'}</p>
         """
 
-        email_data = {
-            "from": "RAJA Health Care <onboarding@resend.dev>",
-            "to": ["senthilvsmagudesh@gmail.com"],  # Replace with your Gmail
-            "subject": f"New Appointment Request - {form.name}",
-            "html": email_content
-        }
+        # Validate API key and recipient
+        if not resend_api_key:
+            email_status["error"] = "Email configuration error: RESEND_API_KEY not set"
+            logger.error(email_status["error"])
+        elif not admin_email:
+            email_status["error"] = "Email configuration error: Admin recipient email not set"
+            logger.error(email_status["error"])
+        else:
+            # Resend API expects a JSON body with a slightly different shape
+            email_data = {
+                "from": "RAJA Health Care <onboarding@resend.dev>",
+                "to": [admin_email],
+                "subject": f"New Appointment Request - {form.name}",
+                "html": email_content
+            }
 
-        headers = {
-            "Authorization": f"Bearer {resend_api_key}",
-            "Content-Type": "application/json"
-        }
+            headers = {
+                "Authorization": f"Bearer {resend_api_key}",
+                "Content-Type": "application/json"
+            }
 
-        response = requests.post(resend_url, json=email_data, headers=headers)
-        
-        if response.status_code != 200:
-            logger.error(f"Failed to send email: {response.text}")
-            # Don't raise exception, still return success if appointment was saved
+            try:
+                response = requests.post(resend_url, json=email_data, headers=headers, timeout=15)
+                response_data = response.json() if response.text else {}
+                
+                # Log full response for debugging
+                logger.info("Resend response status: %s", response.status_code)
+                logger.debug("Resend response body: %s", response.text)
+
+                if not response.ok:
+                    error_message = response_data.get('message', response.text)
+                    email_status["error"] = f"Failed to send email: {error_message}"
+                    logger.error(email_status["error"])
+                else:
+                    email_status["sent"] = True
+                    logger.info("Email sent successfully via Resend to %s", admin_email)
+            except requests.RequestException as e:
+                email_status["error"] = f"Network error while sending email: {str(e)}"
+                logger.exception(email_status["error"])
+            except Exception as e:
+                email_status["error"] = f"Unexpected error while sending email: {str(e)}"
+                logger.exception(email_status["error"])
         
         return {
             "status": "success",
-            "message": "Appointment request received successfully"
+            "message": "Appointment request received successfully",
+            "email_status": {
+                "sent": email_status["sent"],
+                "message": "Email notification sent successfully" if email_status["sent"] else "Failed to send email notification",
+                "error": email_status["error"]
+            }
         }
-        
     except Exception as e:
+        logger.exception("Failed to process appointment request")
+        raise HTTPException(status_code=500, detail="Failed to process appointment request")    except Exception as e:
         logger.exception("Failed to process appointment request")
         raise HTTPException(status_code=500, detail="Failed to process appointment request")
 

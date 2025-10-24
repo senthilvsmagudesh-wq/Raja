@@ -50,11 +50,22 @@ const BookAppointment = () => {
         body: JSON.stringify(formData),
       });
 
+      const data = await response.json();
+
       if (response.ok) {
-        toast({
-          title: "Appointment Request Sent!",
-          description: "We'll confirm your appointment shortly via phone or email.",
-        });
+        if (data.email_status && data.email_status.sent) {
+          toast({
+            title: "Appointment Request Sent!",
+            description: "We'll confirm your appointment shortly via phone or email.",
+          });
+        } else {
+          toast({
+            title: "Appointment Saved",
+            description: data.email_status?.error || "Appointment saved but email notification failed. We'll contact you shortly.",
+            variant: "warning"
+          });
+        }
+
         setFormData({
           name: '',
           email: '',
@@ -65,7 +76,7 @@ const BookAppointment = () => {
           reason: ''
         });
       } else {
-        throw new Error('Failed to book appointment');
+        throw new Error(data.detail || 'Failed to book appointment');
       }
     } catch (error) {
       toast({
