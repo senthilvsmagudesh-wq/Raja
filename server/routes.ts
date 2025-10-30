@@ -1,7 +1,7 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http"; // Bring back imports
 import { Resend } from "resend";
-import { appointmentSchema, contactSchema } from "@shared/schema";
+import { appointmentSchema, contactSchema } from "../shared/schema"; // Use relative path
 import { z } from "zod";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
