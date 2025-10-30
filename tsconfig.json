@@ -28,6 +28,5 @@
       "@assets/*": ["./attached_assets/*"]
     }
   },
-  "include": ["client/src", "server", "shared", "vite.config.ts"],
-  "references": [{ "path": "./tsconfig.node.json" }]
+  "include": ["client/src", "server", "shared", "vite.config.ts"]
 }
