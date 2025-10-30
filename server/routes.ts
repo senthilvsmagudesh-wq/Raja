@@ -1,11 +1,12 @@
+import type { Express } from "express";
+import { createServer, type Server } from "http"; // Bring back imports
 import { Resend } from "resend";
 import { appointmentSchema, contactSchema } from "@shared/schema";
 import { z } from "zod";
-import type { Express } from "express"; // Added Express import
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
-export function registerRoutes(app: Express): Express {
+export async function registerRoutes(app: Express): Promise<Server> {
   // Appointment booking endpoint
   app.post("/api/appointments", async (req, res) => {
     try {
@@ -206,5 +207,6 @@ export function registerRoutes(app: Express): Express {
     }
   });
 
-  return app;
+  const httpServer = createServer(app);
+  return httpServer;
 }
