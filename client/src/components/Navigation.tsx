@@ -49,11 +49,15 @@ export function Navigation() {
 
         {/* Desktop CTAs */}
         <div className="hidden lg:flex items-center gap-3">
-          <a href="tel:+919876543210" className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors" data-testid="link-phone">
+          <a href="tel:+917695991173" className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors" data-testid="link-phone">
             <Phone className="w-4 h-4" />
-            <span className="font-medium">+91 98765 43210</span>
+            <span className="font-medium">+91 76959 91173</span>
           </a>
-          <Link href="/book-appointment" data-testid="link-book-cta">
+          <Link 
+            href="/#book-appointment-section" 
+            data-testid="link-book-cta"
+            onClick={() => document.getElementById("book-appointment-section")?.scrollIntoView({ behavior: "smooth" })}
+          >
             <Button className="shadow-md">Book Appointment</Button>
           </Link>
         </div>
@@ -88,12 +92,19 @@ export function Navigation() {
               </Link>
             ))}
             <div className="pt-4 space-y-3">
-              <a href="tel:+919876543210" className="flex items-center gap-2 px-4 py-3 text-sm text-muted-foreground" data-testid="link-mobile-phone">
+              <a href="tel:+917695991173" className="flex items-center gap-2 px-4 py-3 text-sm text-muted-foreground" data-testid="link-mobile-phone">
                 <Phone className="w-4 h-4" />
-                <span className="font-medium">+91 98765 43210</span>
+                <span className="font-medium">+91 76959 91173</span>
               </a>
-              <Link href="/book-appointment" data-testid="link-mobile-book">
-                <Button className="w-full" onClick={() => setMobileMenuOpen(false)}>
+              <Link 
+                href="/#book-appointment-section" 
+                data-testid="link-mobile-book"
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  document.getElementById("book-appointment-section")?.scrollIntoView({ behavior: "smooth" });
+                }}
+              >
+                <Button className="w-full">
                   Book Appointment
                 </Button>
               </Link>

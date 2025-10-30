@@ -10,7 +10,7 @@ import About from "@/pages/About";
 import Services from "@/pages/Services";
 import Doctor from "@/pages/Doctor";
 import Contact from "@/pages/Contact";
-import BookAppointment from "@/pages/BookAppointment";
+
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -21,7 +21,7 @@ function Router() {
       <Route path="/services" component={Services} />
       <Route path="/doctor" component={Doctor} />
       <Route path="/contact" component={Contact} />
-      <Route path="/book-appointment" component={BookAppointment} />
+
       <Route component={NotFound} />
     </Switch>
   );
