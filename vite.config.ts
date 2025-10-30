@@ -5,20 +5,17 @@ import path from "path";
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
+  root: path.resolve(__dirname, "client"), // Set client as root
   resolve: {
     alias: {
-      "@": path.resolve(__dirname, "client", "src"),
-      "@shared": path.resolve(__dirname, "shared"),
-      "@assets": path.resolve(__dirname, "attached_assets"),
+      "@": path.resolve(__dirname, "src"), // Relative to new root
+      "@shared": path.resolve(__dirname, "..", "shared"), // Relative to new root
+      "@assets": path.resolve(__dirname, "..", "attached_assets"), // Relative to new root
     },
   },
-
   build: {
-    outDir: path.resolve(__dirname, "dist/public"),
+    outDir: path.resolve(__dirname, "..", "dist/public"), // Relative to new root
     emptyOutDir: true,
-    rollupOptions: {
-      input: path.resolve(__dirname, "client/index.html"),
-    },
   },
   server: {
     fs: {
